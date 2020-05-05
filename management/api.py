@@ -1,6 +1,6 @@
 
 from rest_framework import views, status, response
-from rest_framework.parsers import FileUploadParser
+from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 
 from .models import Event, Registration, Thumbnail
 from .serializers import EventSerializer, RegistrationSerializer, ThumbnailSerializer
@@ -37,7 +37,7 @@ class EventAPI(views.APIView):
 
 
 class ThumbnailAPI(views.APIView):
-    parser_classes = (FileUploadParser, )
+    parser_classes = (MultiPartParser, )
 
     def post(self, request, format=None):
         serializer = ThumbnailSerializer(data=request.data)
