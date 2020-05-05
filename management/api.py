@@ -9,7 +9,6 @@ from django.utils import timezone
 
 
 class EventDetailAPI(views.APIView):
-    # TODO: permissions???
 
     def get(self, request, pk, format=None):
         try:
@@ -40,11 +39,13 @@ class RegistrationAPI(views.APIView):
 
     def post(self, request, format=None):
         event_id = request.data['event_id']
-        if Event.objects.get(id=event_id) is None:
-            return response.Response({'error': 'There is no event with {0} id.'.format(id)}, status=status.HTTP_404_NOT_FOUND)
+        try:
+            event = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            return response.Response({'error': 'There is no event with {0} id.'.format(event_id)}, status=status.HTTP_404_NOT_FOUND)
 
         data = {
-            'event_id': id,
+            'event_id': event_id,
             'code': uuid.uuid4()
         }
 
@@ -57,7 +58,7 @@ class RegistrationAPI(views.APIView):
 
     @staticmethod
     def is_possible_to_delete(event):
-        now = timezone.now()
+        now = timezone.now().date()
         diff_days = (event.start_date - now).days
         if diff_days < 2:
             return False
@@ -70,14 +71,19 @@ class RegistrationAPI(views.APIView):
 
     def delete(self, request, format=None):
         registration_code = request.data['code']
-        registration = Registration.objects.get(code=registration_code)
-        if registration is None:
+
+        try:
+            registration = Registration.objects.get(code=registration_code)
+        except Registration.DoesNotExist:
             return response.Response({'error': 'There is no registration with {0} code.'.format(registration_code)},
                                      status=status.HTTP_404_NOT_FOUND)
 
-        event = Event.objects.get(id=registration.event_id)
+        event = Event.objects.get(id=registration.event_id.id)
         if self.is_possible_to_delete(event):
             registration.delete()
+            return response.Response({'info': 'Reservation {0} code cancelled'.format(registration_code)}, status=status.HTTP_200_OK)
+        else:
+            return response.Response({'error': 'Cancellation is impossible.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
