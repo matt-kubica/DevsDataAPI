@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f48293c9-5248-43f2-a360-4c334866785d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/management/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevsDataAPI/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DevsDataAPI/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/management/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/management/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/management/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevsDataAPI/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DevsDataAPI/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +78,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1588667063189</updated>
-      <workItem from="1588667131743" duration="4508000" />
+      <workItem from="1588667131743" duration="4823000" />
     </task>
     <servers />
   </component>
