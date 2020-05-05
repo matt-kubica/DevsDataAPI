@@ -1,11 +1,16 @@
 from rest_framework import serializers
-from .models import Event, Registration
+from .models import Event, Registration, Thumbnail
 
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ['id', 'title', 'start_date', 'end_date'] # TODO: thumbnail????
+        fields = '__all__'
+
+class ThumbnailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Thumbnail
+        fields = '__all__'
 
 
 class RegistrationSerializer(serializers.ModelSerializer):

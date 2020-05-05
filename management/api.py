@@ -1,8 +1,9 @@
 
 from rest_framework import views, status, response
+from rest_framework.parsers import FileUploadParser
 
-from .models import Event, Registration
-from .serializers import EventSerializer, RegistrationSerializer
+from .models import Event, Registration, Thumbnail
+from .serializers import EventSerializer, RegistrationSerializer, ThumbnailSerializer
 
 import uuid
 from django.utils import timezone
@@ -33,6 +34,20 @@ class EventAPI(views.APIView):
             serializer.save()
             return response.Response(serializer.data, status=status.HTTP_201_CREATED)
         return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ThumbnailAPI(views.APIView):
+    parser_classes = (FileUploadParser, )
+
+    def post(self, request, format=None):
+        serializer = ThumbnailSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class RegistrationAPI(views.APIView):
