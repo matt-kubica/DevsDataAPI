@@ -12,12 +12,28 @@ class EventDetailAPI(views.APIView):
     # TODO: permissions???
 
     def get(self, request, pk, format=None):
-        event = Event.objects.get(id=pk)
+        try:
+            event = Event.objects.get(id=pk)
+        except Event.DoesNotExist:
+            return response.Response({'error': 'Event {0} id not found.'.format(pk)}, status=status.HTTP_404_NOT_FOUND)
+
         serializer = EventSerializer(event, many=False)
         return response.Response(serializer.data)
 
-    # TODO: post
 
+class EventAPI(views.APIView):
+
+    def get(self, request, format=None):
+        events = Event.objects.all()
+        serializer = EventSerializer(events, many=True)
+        return response.Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = EventSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data, status=status.HTTP_201_CREATED)
+        return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RegistrationAPI(views.APIView):
