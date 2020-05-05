@@ -49,6 +49,7 @@ class RegistrationAPI(views.APIView):
             'code': uuid.uuid4()
         }
 
+
         serializer = RegistrationSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
